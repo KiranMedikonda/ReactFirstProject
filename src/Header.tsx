@@ -51,6 +51,7 @@ const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen, tab, setTa
         <IconButton color="inherit" component={Link} to="/account">
           <AccountCircleIcon />
         </IconButton>
+
         </Stack>
       </Toolbar>
     </AppBar>

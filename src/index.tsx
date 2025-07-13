@@ -11,6 +11,9 @@ import Cart from './Cart';
 import Checkout from './Checkout';
 import ProductDetail from './ProductDetail';
 import Login from './Login';
+import Register from './Register';
+import ForgotPassword from './ForgotPassword';
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -21,6 +24,8 @@ root.render(
         <Routes>
           <Route element={<MainLayout />}>
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/" element={<Products />} />
             <Route path="/products" element={<Products />} />
             <Route path="/products/:id" element={<ProductDetail />} />
