@@ -5,7 +5,7 @@ const Footer: React.FC = () => (
     &copy; {new Date().getFullYear()} ShopZone. All rights reserved.
     <br />
     Developed by Kiran Medikonda
-    <br />
+    
     Contact: +91 9642414003
     <br />
   </footer>
