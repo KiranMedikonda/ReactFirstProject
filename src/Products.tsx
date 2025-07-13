@@ -3,16 +3,15 @@ import { useCart, Product as ProductType } from './CartContext';
 import Button from '@mui/material/Button';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Box from '@mui/material/Box';
 
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  description: string;
-}
+// interface Product {
+//   id: number;
+//   name: string;
+//   price: number;
+//   description: string;
+// }
 
 const sampleProducts: ProductType[] = [
   {

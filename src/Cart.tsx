@@ -9,6 +9,8 @@ import CardMedia from '@mui/material/CardMedia';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
+import { useNavigate } from 'react-router-dom';
+
 // Sample images for demo
 const productImages: Record<number, string> = {
   1: 'https://m.media-amazon.com/images/I/71v2jVn2RiL._SX679_.jpg',
@@ -17,6 +19,7 @@ const productImages: Record<number, string> = {
 
 const Cart: React.FC = () => {
   const { cart, addMoreToCart, removeFromCart } = useCart();
+   const navigate = useNavigate();
   return (
     <div>
         <Box sx={{ textAlign: 'center',maxWidth: 800, mx: 'auto', mt: 4, p: 2 }}>
@@ -30,7 +33,7 @@ const Cart: React.FC = () => {
                 //Items you have added to your cart will appear here.
                 <Box sx={{ textAlign: 'center', mt: 4 }}>
                 <Typography variant="h6" color="text.secondary">Your cart is empty</Typography>
-                <Button variant="outlined" size="small" sx={{ mt: 2, textTransform: 'none', color: '#007185' }}>
+                <Button variant="outlined" size="small" sx={{ mt: 2, textTransform: 'none', color: '#007185' }} onClick={() => navigate('/')}>
                 Continue shopping
                 </Button>
                 </Box>

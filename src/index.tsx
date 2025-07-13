@@ -5,7 +5,7 @@ import App from './App';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import MainLayout from './MainLayout';
-import Home from './Home';
+// import Home from './Home';
 import Products from './Products';
 import Cart from './Cart';
 import Checkout from './Checkout';
