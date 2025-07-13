@@ -10,7 +10,7 @@ import Products from './Products';
 import Cart from './Cart';
 import Checkout from './Checkout';
 import ProductDetail from './ProductDetail';
-
+import Login from './Login';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -20,6 +20,7 @@ root.render(
       <App>
         <Routes>
           <Route element={<MainLayout />}>
+            <Route path="/login" element={<Login />} />
             <Route path="/" element={<Products />} />
             <Route path="/products" element={<Products />} />
             <Route path="/products/:id" element={<ProductDetail />} />
