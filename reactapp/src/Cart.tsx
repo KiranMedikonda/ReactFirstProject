@@ -1,9 +1,7 @@
 import React from 'react';
 import { useCart } from './CartContext';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -11,8 +9,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-import { Stack } from '@mui/material';
-
 // Sample images for demo
 const productImages: Record<number, string> = {
   1: 'https://m.media-amazon.com/images/I/71v2jVn2RiL._SX679_.jpg',
@@ -23,7 +19,7 @@ const Cart: React.FC = () => {
   const { cart, addMoreToCart, removeFromCart } = useCart();
   return (
     <div>
-        <Box sx={{ maxWidth: 800, mx: 'auto', mt: 4, p: 2 }}>
+        <Box sx={{ textAlign: 'center',maxWidth: 800, mx: 'auto', mt: 4, p: 2 }}>
             
             <Typography variant="h4" gutterBottom>Shopping Cart</Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
@@ -32,10 +28,12 @@ const Cart: React.FC = () => {
             </Typography>
             {cart.length === 0 ? (
                 //Items you have added to your cart will appear here.
+                <Box sx={{ textAlign: 'center', mt: 4 }}>
+                <Typography variant="h6" color="text.secondary">Your cart is empty</Typography>
                 <Button variant="outlined" size="small" sx={{ mt: 2, textTransform: 'none', color: '#007185' }}>
                 Continue shopping
                 </Button>
-
+                </Box>
             ) : (
                 <Grid container spacing={2}>
                 {cart.map((item) => (
