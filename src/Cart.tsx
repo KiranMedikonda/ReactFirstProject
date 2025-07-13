@@ -52,7 +52,7 @@ const navigate = useNavigate();
                     <Card variant="outlined" sx={{ display: 'flex', alignItems: 'flex-start', p: 2 }}>
                         <CardMedia
                         component="img"
-                        image={productImages[item.id] || 'https://via.placeholder.com/120'}
+                        image={item.image}
                         // alt={item.name}
                         sx={{ width: 120, height: 120, objectFit: 'contain', mr: 2, borderRadius: 2, border: '1px solid #eee' }}
                         />
