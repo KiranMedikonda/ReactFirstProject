@@ -11,19 +11,6 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import { useNavigate } from 'react-router-dom';
 
-// Sample images for demo
-const productImages: Record<number, string> = {
-  1: 'https://m.media-amazon.com/images/I/71v2jVn2RiL._SX679_.jpg',
-  2: 'https://m.media-amazon.com/images/I/81QpkIctqPL._SX679_.jpg',
-};
-
-// interface CartItem {
-//   id: number;
-//   title: string; // ✅ you have this
-//   price: number;
-//   image: string;
-//   quantity: number;
-// }
 
 const Cart: React.FC = () => {
 const { cart, addMoreToCart, removeFromCart } = useCart();
