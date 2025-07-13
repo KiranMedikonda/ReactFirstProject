@@ -1,13 +1,16 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-export interface Product {
+// ✅ Define Product type here (or import it from your models/types)
+interface Product {
   id: number;
-  name: string;
+  title: string;
   price: number;
-  description: string;
+  image: string;
+  quantity?: number; // Optional for cart items
+  description?: string; // Optional for product details
 }
 
-export interface CartItem extends Product {
+interface CartItem extends Product {
   quantity: number;
 }
 

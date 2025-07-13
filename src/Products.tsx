@@ -1,71 +1,182 @@
-import React from 'react';
-import { useCart, Product as ProductType } from './CartContext';
-import Button from '@mui/material/Button';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Box from '@mui/material/Box';
+import { useEffect, useState } from 'react';
+import { useCart } from './CartContext';
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  CircularProgress,
+  Container,
+  TextField,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  Box,
+  Button,
+  CardActions,
+  Snackbar,
+} from '@mui/material';
+import Grid from '@mui/material/Grid';
+import { useNavigate } from 'react-router-dom';
 
-// interface Product {
-//   id: number;
-//   name: string;
-//   price: number;
-//   description: string;
-// }
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+}
 
-const sampleProducts: ProductType[] = [
-  {
-    id: 1,
-    name: 'Wireless Headphones',
-    price: 59.99,
-    description: 'High-quality wireless headphones with noise cancellation.'
-  },
-  {
-    id: 2,
-    name: 'Smart Watch',
-    price: 129.99,
-    description: 'Feature-rich smart watch with health tracking.'    
+const Products = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('all');
+  const [categories, setCategories] = useState<string[]>([]);
+  const [snackOpen, setSnackOpen] = useState(false);
+
+  const navigate = useNavigate();
+  const { addToCart } = useCart();
+
+  const endpoint = 'https://fakestoreapi.com/products';
+
+useEffect(() => {
+  const fetchProducts = async () => {
+    try {
+      const res = await fetch(endpoint);
+      const data: Product[] = await res.json(); // ✅ Typed here
+      setProducts(data);
+
+      const cats = Array.from(new Set(data.map((p) => p.category)));
+      setCategories(cats); // ✅ Now no error
+    } catch (err) {
+      console.error('Failed to fetch products:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchProducts();
+}, []);
+
+  const filteredProducts = products.filter((product) => {
+    const matchesSearch = product.title.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = categoryFilter === 'all' || product.category === categoryFilter;
+    return matchesSearch && matchesCategory;
+  });
+
+  if (loading) {
+    return (
+      <Container sx={{ textAlign: 'center', mt: 5 }}>
+        <CircularProgress />
+        <Typography variant="h6" mt={2}>
+          Loading Products...
+        </Typography>
+      </Container>
+    );
   }
-];
 
-const Products: React.FC = () => {
-  const { cart, addToCart, addMoreToCart, removeFromCart } = useCart();
   return (
-    <div>
-        <Box sx={{ maxWidth: 800, mx: 'auto', mt: 4, p: 2 }}>
-            <h1>Products</h1>
-            <ul>
-                {sampleProducts.map(product => {
-                const cartItem = cart.find(item => item.id === product.id);
-                return (
-                    <li key={product.id} style={{ marginBottom: '1rem' }}>
-                    <strong>{product.name}</strong> - ${product.price.toFixed(2)}
-                    <br />
-                    <span>{product.description}</span>
-                    <br />
-                    {cartItem ? (
-                        <Box sx={{ display: 'inline-flex', alignItems: 'center', border: '2px solid #FFD600', borderRadius: '20px', px: 1, py: 0.5, gap: 1, mt: 1 }}>
-                        <Button size="small" onClick={() => removeFromCart(product.id)} sx={{ minWidth: 0 }}><DeleteIcon /></Button>
-                        <span style={{ fontWeight: 'bold', fontSize: '1.1rem', color: '#222' }}>{cartItem.quantity}</span>
-                        <Button size="small" onClick={() => addMoreToCart(product.id)} sx={{ minWidth: 0 }}><AddIcon /></Button>
-                        </Box>
-                    ) : (
-                        <Button
-                        variant="contained"
-                        color="primary"
-                        startIcon={<ShoppingCartIcon />}
-                        onClick={() => addToCart(product)}
-                        sx={{ mt: 1 }}
-                        >
-                        Add to Cart
-                        </Button>
-                    )}
-                    </li>
-                );
-                })}
-            </ul>
+    <Container sx={{ mt: 4 }}>
+      <Box sx={{ display: 'flex', gap: 2, mb: 4, flexWrap: 'wrap' }}>
+        <TextField
+          label="Search Products"
+          variant="outlined"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+
+        <FormControl sx={{ minWidth: 200 }}>
+          <InputLabel>Category</InputLabel>
+          <Select
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+            label="Category"
+          >
+            <MenuItem value="all">All</MenuItem>
+            {categories.map((cat) => (
+              <MenuItem key={cat} value={cat}>
+                {cat[0].toUpperCase() + cat.slice(1)}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </Box>
-    </div>
+
+      {filteredProducts.length === 0 ? (
+        <Typography variant="h6">No products found.</Typography>
+      ) : (
+        <Grid container spacing={3}>
+          {filteredProducts.map((product) => (
+            <Grid  key={product.id}>
+              <Card
+                sx={{
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  height="200"
+                  image={product.image}
+                  alt={product.title}
+                  sx={{ objectFit: 'contain', p: 2 }}
+                />
+                <CardContent>
+                  <Typography variant="subtitle1" fontWeight="bold" gutterBottom noWrap>
+                    {product.title}
+                  </Typography>
+                  <Typography color="text.secondary">₹ {product.price}</Typography>
+                </CardContent>
+
+                <CardActions sx={{ mt: 'auto', p: 2, pt: 0 }}>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    color="primary"
+                    sx={{ flex: 1 }}
+                    onClick={() => {
+                      addToCart({
+                        id: product.id,
+                        title: product.title,
+                        price: product.price,
+                        image: product.image,
+                        quantity: 1,
+                      });
+                      setSnackOpen(true);
+                    }}
+                  >
+                    Add to Cart
+                  </Button>
+
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    color="secondary"
+                    sx={{ flex: 1, ml: 1 }}
+                    onClick={() => navigate(`/products/${product.id}`)}
+                  >
+                    View
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      )}
+
+      <Snackbar
+        open={snackOpen}
+        autoHideDuration={2000}
+        onClose={() => setSnackOpen(false)}
+        message="Item added to cart!"
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      />
+    </Container>
   );
 };
 

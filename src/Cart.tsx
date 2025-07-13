@@ -17,9 +17,17 @@ const productImages: Record<number, string> = {
   2: 'https://m.media-amazon.com/images/I/81QpkIctqPL._SX679_.jpg',
 };
 
+// interface CartItem {
+//   id: number;
+//   title: string; // ✅ you have this
+//   price: number;
+//   image: string;
+//   quantity: number;
+// }
+
 const Cart: React.FC = () => {
-  const { cart, addMoreToCart, removeFromCart } = useCart();
-   const navigate = useNavigate();
+const { cart, addMoreToCart, removeFromCart } = useCart();
+const navigate = useNavigate();
   return (
     <div>
         <Box sx={{ textAlign: 'center',maxWidth: 800, mx: 'auto', mt: 4, p: 2 }}>
@@ -45,11 +53,11 @@ const Cart: React.FC = () => {
                         <CardMedia
                         component="img"
                         image={productImages[item.id] || 'https://via.placeholder.com/120'}
-                        alt={item.name}
+                        // alt={item.name}
                         sx={{ width: 120, height: 120, objectFit: 'contain', mr: 2, borderRadius: 2, border: '1px solid #eee' }}
                         />
                         <CardContent sx={{ flex: 1, p: 0 }}>
-                        <Typography variant="h6" sx={{ mb: 1 }}>{item.name}</Typography>
+                        {/* <Typography variant="h6" sx={{ mb: 1 }}>{item.name}</Typography> */}
                         <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>In stock</Typography>
                         <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>Eligible for FREE Shipping</Typography>
                         <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>Colour: White</Typography>

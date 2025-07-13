@@ -9,6 +9,7 @@ import MainLayout from './MainLayout';
 import Products from './Products';
 import Cart from './Cart';
 import Checkout from './Checkout';
+import ProductDetail from './ProductDetail';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -21,6 +22,7 @@ root.render(
           <Route element={<MainLayout />}>
             <Route path="/" element={<Products />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/products/:id" element={<ProductDetail />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             {/* Placeholder routes for sidebar */}
